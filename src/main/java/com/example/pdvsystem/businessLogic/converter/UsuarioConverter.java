@@ -19,16 +19,19 @@ public class UsuarioConverter {
 		usuarioResponse.setEmail(usuario.getEmail());
 		usuarioResponse.setSenha(usuario.getSenha());
 		usuarioResponse.setDocumento(usuario.getDocumento());
+		usuarioResponse.setIsMaster(usuario.getIsMaster());
 
-		EmpresaRequest empresaRequest = new EmpresaRequest();
-		empresaRequest.setIdEmpresa(usuario.getIdEmpresa().getId());
-
-		usuarioResponse.setEmpresa(empresaRequest);
-
-		InfoCadastroRequest cadastroRequest = new InfoCadastroRequest();
-		cadastroRequest.setIdInfoCadastro(usuario.getIdInfoCadastro().getId());
-
-		usuarioResponse.setInfoCadastro(cadastroRequest);
+		if (usuario.getIdEmpresa() != null) {
+			EmpresaRequest empresaRequest = new EmpresaRequest();
+			empresaRequest.setIdEmpresa(usuario.getIdEmpresa().getId());
+			usuarioResponse.setEmpresa(empresaRequest);
+		}
+		
+		if (usuario.getIdInfoCadastro() != null) {
+			InfoCadastroRequest cadastroRequest = new InfoCadastroRequest();
+			cadastroRequest.setIdInfoCadastro(usuario.getIdInfoCadastro().getId());
+			usuarioResponse.setInfoCadastro(cadastroRequest);
+		}
 
 		return usuarioResponse;
 	}
@@ -42,16 +45,19 @@ public class UsuarioConverter {
 		usuarioRequest.setEmail(usuario.getEmail());
 		usuarioRequest.setSenha(usuario.getSenha());
 		usuarioRequest.setDocumento(usuario.getDocumento());
-
-		EmpresaRequest empresaRequest = new EmpresaRequest();
-		empresaRequest.setIdEmpresa(usuario.getIdEmpresa().getId());
-
-		usuarioRequest.setEmpresa(empresaRequest);
-
-		InfoCadastroRequest cadastroRequest = new InfoCadastroRequest();
-		cadastroRequest.setIdInfoCadastro(usuario.getIdInfoCadastro().getId());
-
-		usuarioRequest.setInfoCadastro(cadastroRequest);
+		usuarioRequest.setIsMaster(usuario.getIsMaster());
+		
+		if (usuario.getIdEmpresa() != null) {
+			EmpresaRequest empresaRequest = new EmpresaRequest();
+			empresaRequest.setIdEmpresa(usuario.getIdEmpresa().getId());
+			usuarioRequest.setEmpresa(empresaRequest);
+		}
+		
+		if (usuario.getIdInfoCadastro() != null) {
+			InfoCadastroRequest cadastroRequest = new InfoCadastroRequest();
+			cadastroRequest.setIdInfoCadastro(usuario.getIdInfoCadastro().getId());
+			usuarioRequest.setInfoCadastro(cadastroRequest);
+		}
 		
 		return usuarioRequest;
 	}
@@ -65,14 +71,19 @@ public class UsuarioConverter {
 		usuario.setEmail(usuarioRequest.getEmail());
 		usuario.setSenha(usuarioRequest.getSenha());
 		usuario.setDocumento(usuarioRequest.getDocumento());
+		usuario.setIsMaster(usuarioRequest.getIsMaster());
 		
-		Empresa empresa = new Empresa();
-		empresa.setId(usuarioRequest.getEmpresa().getIdEmpresa());
-		usuario.setIdEmpresa(empresa);
+		if (usuarioRequest.getEmpresa() != null) {
+			Empresa empresa = new Empresa();
+			empresa.setId(usuarioRequest.getEmpresa().getIdEmpresa());
+			usuario.setIdEmpresa(empresa);
+		}
 		
-		InfoCadastro infoCadastro = new InfoCadastro();
-		infoCadastro.setId(usuarioRequest.getInfoCadastro().getIdInfoCadastro());
-		usuario.setIdInfoCadastro(infoCadastro);
+		if (usuario.getIdInfoCadastro() != null) {
+			InfoCadastro infoCadastro = new InfoCadastro();
+			infoCadastro.setId(usuarioRequest.getInfoCadastro().getIdInfoCadastro());
+			usuario.setIdInfoCadastro(infoCadastro);
+		}
 		
 		return usuario;
 	}

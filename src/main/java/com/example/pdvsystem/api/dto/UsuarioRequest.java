@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"idUsuario", "empresa", "nome", "email", "senha", "documento", "infoCadastro"})
+@JsonPropertyOrder({"idUsuario", "empresa", "nome", "isMaster", "email", "senha", "documento", "infoCadastro"})
 public class UsuarioRequest {
 
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,15 +20,19 @@ public class UsuarioRequest {
 	private String nome;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("id_usuario")
+	@JsonProperty("is_master")
+	private Boolean isMaster;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonProperty("email")
 	private String email;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("id_usuario")
+	@JsonProperty("senha")
 	private String senha;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("id_usuario")
+	@JsonProperty("documento")
 	private String documento;
 
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -89,5 +93,15 @@ public class UsuarioRequest {
 
 	public void setInfoCadastro(InfoCadastroRequest infoCadastro) {
 		this.infoCadastro = infoCadastro;
+	}
+
+	public Boolean getIsMaster() {
+		return isMaster;
+	}
+
+	public void setIsMaster(Boolean isMaster) {
+		this.isMaster = isMaster;
 	}	
+	
+	
 }
