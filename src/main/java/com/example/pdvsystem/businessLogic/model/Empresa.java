@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,55 +15,84 @@ import javax.persistence.Table;
 public class Empresa {
 
 	@Id
-	@SequenceGenerator(name = "EMPRESA_ID_SEQUENCE", allocationSize = 1, sequenceName = "EMPRESA_ID_SEQUENCE")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPRESA_ID_SEQUENCE")
-	@Column(name = "EMPRESA_ID", nullable = false, unique = true)
-	private int id;
-
-	@Column(name = "NOME", nullable = false)
-	private String nome;
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_EMPRESA", nullable = false)
+	private Integer id;
+	
+	@OneToMany(mappedBy = "idEmpresa", targetEntity = Usuario.class)
+//	@JoinColumn(name = "ID_USUARIO")
+	private List<Usuario> usuario;
+	
+	@OneToMany(mappedBy = "idEmpresa", targetEntity = Cliente.class)
+//	@JoinColumn(name = "ID_CLIENTE")
+	private List<Cliente> cliente;
+	
+	@OneToMany(mappedBy = "idEmpresa", targetEntity = Produto.class)
+//	@JoinColumn(name = "ID_PRODUTO")
+	private List<Produto> produto;
+	
+	@OneToMany(mappedBy = "idEmpresa", targetEntity = Servico.class)
+//	@JoinColumn(name = "ID_SERVICO")
+	private List<Servico> servico;
+	
+	@OneToMany(mappedBy = "idEmpresa", targetEntity = Venda.class)
+	private List<Venda> venda;
+	
+	@OneToMany(mappedBy = "idEmpresa", targetEntity = OrdemServico.class)
+	private List<OrdemServico> ordemServico;
+	
+	@Column(name = "NOME_EMPRESA", nullable = false)
+	private String nomeEmpresa;
+	
 	@Column(name = "DOCUMENTO", nullable = false, unique = true)
 	private String documento;
 
-	@OneToMany(mappedBy = "empresa")
-	private List<Usuario> usuarios;
-
-	// Constructors
-	
-	public Empresa(int id, String nome, String documento) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.documento = documento;
-	}
-
-	public Empresa(String nome, String documento) {
-		super();
-		this.nome = nome;
-		this.documento = documento;
-	}
-
-	public Empresa() {
-
-	}
-
-	// Getters & Setters
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public List<Usuario> getUsuario() {
+		return usuario;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setUsuario(List<Usuario> usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<Cliente> getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(List<Cliente> cliente) {
+		this.cliente = cliente;
+	}
+
+	public List<Produto> getProduto() {
+		return produto;
+	}
+
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
+
+	public List<Servico> getServico() {
+		return servico;
+	}
+
+	public void setServico(List<Servico> servico) {
+		this.servico = servico;
+	}
+
+	public String getNomeEmpresa() {
+		return nomeEmpresa;
+	}
+
+	public void setNomeEmpresa(String nomeEmpresa) {
+		this.nomeEmpresa = nomeEmpresa;
 	}
 
 	public String getDocumento() {
@@ -75,11 +103,19 @@ public class Empresa {
 		this.documento = documento;
 	}
 
-	public List<Usuario> getUsuarios() {
-		return usuarios;
+	public List<Venda> getVenda() {
+		return venda;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public void setVenda(List<Venda> venda) {
+		this.venda = venda;
+	}
+
+	public List<OrdemServico> getOrdemServico() {
+		return ordemServico;
+	}
+
+	public void setOrdemServico(List<OrdemServico> ordemServico) {
+		this.ordemServico = ordemServico;
 	}
 }
