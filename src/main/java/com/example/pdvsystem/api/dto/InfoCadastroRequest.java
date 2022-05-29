@@ -4,42 +4,34 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"idInfoCadastro", "idUsuario", "idCliente", "logradouro", "numero", "complemento", "bairro", "cidade", "cep"})
+@JsonPropertyOrder({"idInfoCadastro", "logradouro", "numero", "complemento", "bairro", "cidade", "cep"})
 public class InfoCadastroRequest {
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_info_cadastro")
 	private Integer idInfoCadastro;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("id_usuario")
-	private Integer idUsuario;
-	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("id_cliente")
-	private Integer idCliente;
-	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("logradouro")
 	private String logradouro;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("numero")
 	private String numero;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("complemento")
 	private String complemento;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("bairro")
 	private String bairro;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("cidade")
 	private String cidade;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("cep")
 	private String cep;
 
@@ -49,22 +41,6 @@ public class InfoCadastroRequest {
 
 	public void setIdInfoCadastro(Integer idInfoCadastro) {
 		this.idInfoCadastro = idInfoCadastro;
-	}
-
-	public Integer getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public Integer getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
 	}
 
 	public String getLogradouro() {

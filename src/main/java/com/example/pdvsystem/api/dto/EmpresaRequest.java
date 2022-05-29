@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"idEmpresa", "nomeEmpresa", "documento"})
 public class EmpresaRequest {
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_empresa")
 	private Integer idEmpresa;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("nome_empresa")
 	private String nomeEmpresa;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("documento")
 	private String documento;
 

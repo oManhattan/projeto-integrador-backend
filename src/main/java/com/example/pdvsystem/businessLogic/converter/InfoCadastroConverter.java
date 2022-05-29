@@ -10,6 +10,7 @@ public class InfoCadastroConverter {
 		
 		InfoCadastroResponse infoCadastroResponse = new InfoCadastroResponse();
 		
+		infoCadastroResponse.setIdInfoCadastro(infoCadastro.getId());
 		infoCadastroResponse.setLogradouro(infoCadastro.getLogradouro());
 		infoCadastroResponse.setNumero(infoCadastro.getNumero());
 		infoCadastroResponse.setComplemento(infoCadastro.getComplemento());
@@ -24,6 +25,7 @@ public class InfoCadastroConverter {
 		
 		InfoCadastroRequest infoCadastroRequest = new InfoCadastroRequest();
 		
+		infoCadastroRequest.setIdInfoCadastro(infoCadastro.getId());
 		infoCadastroRequest.setLogradouro(infoCadastro.getLogradouro());
 		infoCadastroRequest.setNumero(infoCadastro.getNumero());
 		infoCadastroRequest.setComplemento(infoCadastro.getComplemento());
@@ -41,6 +43,7 @@ public class InfoCadastroConverter {
 		infoCadastro.setId(infoCadastroRequest.getIdInfoCadastro());
 		infoCadastro.setLogradouro(infoCadastroRequest.getLogradouro());
 		infoCadastro.setNumero(infoCadastroRequest.getNumero());
+		infoCadastro.setComplemento(infoCadastroRequest.getComplemento());
 		infoCadastro.setBairro(infoCadastroRequest.getBairro());
 		infoCadastro.setCidade(infoCadastroRequest.getCidade());
 		infoCadastro.setCep(infoCadastroRequest.getCep());

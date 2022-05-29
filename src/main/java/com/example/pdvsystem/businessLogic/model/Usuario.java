@@ -2,6 +2,7 @@ package com.example.pdvsystem.businessLogic.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,24 +21,22 @@ public class Usuario {
 	@Column(name = "ID_USUARIO", nullable = false)
 	private Integer id;
 	
-	@ManyToOne(targetEntity = Empresa.class)
-//	@JoinColumn(name = "ID_EMPRESA", nullable = false)
+	@ManyToOne(targetEntity = Empresa.class, cascade = CascadeType.PERSIST)
 	private Empresa idEmpresa;
 	
-	@ManyToOne(targetEntity = InfoCadastro.class)
-//	@JoinColumn(name = "ID_INFO_CADASTRO", nullable = false)
+	@ManyToOne(targetEntity = InfoCadastro.class, cascade = CascadeType.PERSIST)
 	private InfoCadastro idInfoCadastro;
 	
-	@Column(name = "NOME", nullable = false)
+	@Column(name = "NOME")
 	private String nome;
 	
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
 	
-	@Column(name = "SENHA", nullable = false)
+	@Column(name = "SENHA")
 	private String senha;
 	
-	@Column(name = "DOCUMENTO", nullable = false)
+	@Column(name = "DOCUMENTO", unique = true)
 	private String documento;
 	
 	@Column(name = "IS_MASTER", nullable = false)

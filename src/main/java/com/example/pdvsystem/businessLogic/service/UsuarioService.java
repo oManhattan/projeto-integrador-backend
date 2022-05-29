@@ -21,7 +21,64 @@ public class UsuarioService {
 	public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest) { 
 		
 		Usuario novoUsuario = UsuarioConverter.toUsuario(usuarioRequest);
+		
 		return UsuarioConverter.toUsuarioResponse(usuarioRepository.save(novoUsuario));
+	}
+	
+	public Boolean usuarioExiste(Integer id) {
+		
+		if (usuarioRepository.getById(id) == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public Boolean loginValidation(UsuarioRequest usuarioRequest) {
+		
+		if (!emailExiste(usuarioRequest)) {
+			return false;
+		}
+		
+		Usuario usuario = usuarioRepository.findByEmail(usuarioRequest.getEmail());
+		
+		if (usuario.getSenha().equals(usuarioRequest.getSenha())) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public Boolean documentoExiste(UsuarioRequest usuarioRequest) {
+		
+		Usuario usuario = usuarioRepository.findByDocumento(usuarioRequest.getDocumento());
+		
+		if (usuario == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public Boolean emailExiste(UsuarioRequest usuarioRequest) {
+		
+		Usuario usuario = usuarioRepository.findByEmail(usuarioRequest.getEmail());
+		
+		if (usuario == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public UsuarioResponse getUsuarioByEmail(UsuarioRequest usuarioRequest) {
+		
+		if (!emailExiste(usuarioRequest)) {
+			return null;
+		}
+		
+		return UsuarioConverter.toUsuarioResponse(usuarioRepository.findByEmail(usuarioRequest.getEmail()));
+		
 	}
 	
 	public UsuarioResponse atualizarUsuario(UsuarioRequest usuarioRequest) {
@@ -31,7 +88,7 @@ public class UsuarioService {
 		}
 		
 		Usuario usuario = UsuarioConverter.toUsuario(usuarioRequest);
-		return UsuarioConverter.toUsuarioResponse(usuario);
+		return UsuarioConverter.toUsuarioResponse(usuarioRepository.save(usuario));
 	}
 	
 	public UsuarioResponse getUsuariobyId(Integer id) {
@@ -50,5 +107,4 @@ public class UsuarioService {
 		
 		return convertedList;
 	}
-	
 }

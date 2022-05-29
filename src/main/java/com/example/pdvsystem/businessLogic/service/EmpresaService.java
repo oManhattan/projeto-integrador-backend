@@ -15,6 +15,26 @@ public class EmpresaService {
 	@Autowired
 	private EmpresaRepository empresaRepository;
 	
+	public Boolean documentoExiste(EmpresaRequest empresaRequest) {
+		
+		Empresa empresa = empresaRepository.findByDocumento(empresaRequest.getDocumento());
+		
+		if (empresa == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public Boolean empresaExiste(Integer id) {
+		
+		if (empresaRepository.getById(id) == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public EmpresaResponse criarEmpresa(EmpresaRequest empresaRequest) {
 		
 		Empresa novaEmpresa = EmpresaConverter.toEmpresa(empresaRequest);
@@ -51,5 +71,12 @@ public class EmpresaService {
 		
 		empresaRepository.deleteById(id);
 		return empresaResponse;
+	}
+	
+	public EmpresaResponse getEmpresaById(Integer id) {
+		
+		Empresa empresa = empresaRepository.getById(id);
+		
+		return EmpresaConverter.toEmpresaResponse(empresa);
 	}
 }

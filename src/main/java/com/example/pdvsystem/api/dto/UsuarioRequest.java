@@ -1,5 +1,6 @@
 package com.example.pdvsystem.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -7,35 +8,35 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"idUsuario", "empresa", "nome", "isMaster", "email", "senha", "documento", "infoCadastro"})
 public class UsuarioRequest {
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_usuario")
 	private Integer idUsuario; 
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_empresa")
 	private EmpresaRequest empresa;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("nome")
 	private String nome;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("is_master")
 	private Boolean isMaster;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("email")
 	private String email;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonIgnore
 	@JsonProperty("senha")
 	private String senha;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("documento")
 	private String documento;
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_info_cadastro")
 	private InfoCadastroRequest infoCadastro;
 	
@@ -59,10 +60,12 @@ public class UsuarioRequest {
 		return email;
 	}
 
+	@JsonProperty
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}

@@ -1,11 +1,7 @@
 package com.example.pdvsystem.businessLogic.converter;
 
-import com.example.pdvsystem.api.dto.EmpresaRequest;
-import com.example.pdvsystem.api.dto.InfoCadastroRequest;
 import com.example.pdvsystem.api.dto.UsuarioRequest;
 import com.example.pdvsystem.api.dto.UsuarioResponse;
-import com.example.pdvsystem.businessLogic.model.Empresa;
-import com.example.pdvsystem.businessLogic.model.InfoCadastro;
 import com.example.pdvsystem.businessLogic.model.Usuario;
 
 public class UsuarioConverter {
@@ -22,15 +18,11 @@ public class UsuarioConverter {
 		usuarioResponse.setIsMaster(usuario.getIsMaster());
 
 		if (usuario.getIdEmpresa() != null) {
-			EmpresaRequest empresaRequest = new EmpresaRequest();
-			empresaRequest.setIdEmpresa(usuario.getIdEmpresa().getId());
-			usuarioResponse.setEmpresa(empresaRequest);
+			usuarioResponse.setEmpresa(EmpresaConverter.toEmpresaRequest(usuario.getIdEmpresa()));
 		}
 		
 		if (usuario.getIdInfoCadastro() != null) {
-			InfoCadastroRequest cadastroRequest = new InfoCadastroRequest();
-			cadastroRequest.setIdInfoCadastro(usuario.getIdInfoCadastro().getId());
-			usuarioResponse.setInfoCadastro(cadastroRequest);
+			usuarioResponse.setInfoCadastro(InfoCadastroConverter.toInfoCadastroRequest(usuario.getIdInfoCadastro()));
 		}
 
 		return usuarioResponse;
@@ -48,15 +40,12 @@ public class UsuarioConverter {
 		usuarioRequest.setIsMaster(usuario.getIsMaster());
 		
 		if (usuario.getIdEmpresa() != null) {
-			EmpresaRequest empresaRequest = new EmpresaRequest();
-			empresaRequest.setIdEmpresa(usuario.getIdEmpresa().getId());
-			usuarioRequest.setEmpresa(empresaRequest);
+			usuarioRequest.setEmpresa(EmpresaConverter.toEmpresaRequest(usuario.getIdEmpresa()));
 		}
 		
 		if (usuario.getIdInfoCadastro() != null) {
-			InfoCadastroRequest cadastroRequest = new InfoCadastroRequest();
-			cadastroRequest.setIdInfoCadastro(usuario.getIdInfoCadastro().getId());
-			usuarioRequest.setInfoCadastro(cadastroRequest);
+			usuarioRequest.setInfoCadastro(InfoCadastroConverter.toInfoCadastroRequest(usuario.getIdInfoCadastro()));
+
 		}
 		
 		return usuarioRequest;
@@ -73,16 +62,14 @@ public class UsuarioConverter {
 		usuario.setDocumento(usuarioRequest.getDocumento());
 		usuario.setIsMaster(usuarioRequest.getIsMaster());
 		
-		if (usuarioRequest.getEmpresa() != null) {
-			Empresa empresa = new Empresa();
-			empresa.setId(usuarioRequest.getEmpresa().getIdEmpresa());
-			usuario.setIdEmpresa(empresa);
+		System.out.println(usuarioRequest.getEmpresa() != null);
+		
+		if (usuarioRequest.getEmpresa() != null) { 
+			usuario.setIdEmpresa(EmpresaConverter.toEmpresa(usuarioRequest.getEmpresa()));
 		}
 		
-		if (usuario.getIdInfoCadastro() != null) {
-			InfoCadastro infoCadastro = new InfoCadastro();
-			infoCadastro.setId(usuarioRequest.getInfoCadastro().getIdInfoCadastro());
-			usuario.setIdInfoCadastro(infoCadastro);
+		if (usuarioRequest.getInfoCadastro() != null) {
+			usuario.setIdInfoCadastro(InfoCadastroConverter.toInfoCadastro(usuarioRequest.getInfoCadastro()));
 		}
 		
 		return usuario;
