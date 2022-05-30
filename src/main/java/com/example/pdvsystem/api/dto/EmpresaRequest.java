@@ -4,35 +4,35 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"idEmpresa", "nomeEmpresa", "documento"})
+@JsonPropertyOrder({"id_empresa", "nome", "documento"})
 public class EmpresaRequest {
 
 	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_empresa")
-	private Integer idEmpresa;
+	private Integer id;
 	
 	@JsonInclude(JsonInclude.Include.ALWAYS)
-	@JsonProperty("nome_empresa")
-	private String nomeEmpresa;
+	@JsonProperty("nome")
+	private String nome;
 	
 	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("documento")
 	private String documento;
 
-	public Integer getIdEmpresa() {
-		return idEmpresa;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdEmpresa(Integer idEmpresa) {
-		this.idEmpresa = idEmpresa;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public String getNomeEmpresa() {
-		return nomeEmpresa;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNomeEmpresa(String nomeEmpresa) {
-		this.nomeEmpresa = nomeEmpresa;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getDocumento() {

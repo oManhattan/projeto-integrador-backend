@@ -1,15 +1,14 @@
 package com.example.pdvsystem.businessLogic.model;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,35 +17,31 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_USUARIO", nullable = false)
+	@Column(name = "ID")
 	private Integer id;
-	
-	@ManyToOne(targetEntity = Empresa.class, cascade = CascadeType.PERSIST)
-	private Empresa idEmpresa;
-	
-	@ManyToOne(targetEntity = InfoCadastro.class, cascade = CascadeType.PERSIST)
-	private InfoCadastro idInfoCadastro;
 	
 	@Column(name = "NOME")
 	private String nome;
 	
-	@Column(name = "EMAIL", nullable = false, unique = true)
+	@Column(name = "DOCUMENTO")
+	private String documento;
+	
+	@Column(name = "EMAIL")
 	private String email;
 	
 	@Column(name = "SENHA")
 	private String senha;
 	
-	@Column(name = "DOCUMENTO", unique = true)
-	private String documento;
-	
-	@Column(name = "IS_MASTER", nullable = false)
+	@Column(name = "IS_MASTER")
 	private Boolean isMaster;
-
-	@OneToMany(mappedBy = "idUsuario")
-	private List<Venda> venda;
 	
-	@OneToMany(mappedBy = "idUsuario")
-	private List<OrdemServico> ordemServico;
+	@ManyToOne(targetEntity = Empresa.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Empresa empresa;
+	
+	@OneToOne(targetEntity = InfoCadastro.class, cascade = CascadeType.ALL)
+	private InfoCadastro cadastro;
+	
+	// ============================================================== //
 	
 	public Integer getId() {
 		return id;
@@ -56,28 +51,20 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public Empresa getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	public void setIdEmpresa(Empresa idEmpresa) {
-		this.idEmpresa = idEmpresa;
-	}
-
-	public InfoCadastro getIdInfoCadastro() {
-		return idInfoCadastro;
-	}
-
-	public void setIdInfoCadastro(InfoCadastro idInfoCadastro) {
-		this.idInfoCadastro = idInfoCadastro;
-	}
-
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	public String getEmail() {
@@ -96,14 +83,6 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public String getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(String documento) {
-		this.documento = documento;
-	}
-
 	public Boolean getIsMaster() {
 		return isMaster;
 	}
@@ -112,19 +91,21 @@ public class Usuario {
 		this.isMaster = isMaster;
 	}
 
-	public List<Venda> getVenda() {
-		return venda;
+	// ============================================================== //
+	
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setVenda(List<Venda> venda) {
-		this.venda = venda;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
-	public List<OrdemServico> getOrdemServico() {
-		return ordemServico;
+	public InfoCadastro getCadastro() {
+		return cadastro;
 	}
 
-	public void setOrdemServico(List<OrdemServico> ordemServico) {
-		this.ordemServico = ordemServico;
+	public void setCadastro(InfoCadastro cadastro) {
+		this.cadastro = cadastro;
 	}
 }

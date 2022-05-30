@@ -1,14 +1,17 @@
 package com.example.pdvsystem.businessLogic.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,44 +20,29 @@ public class Servico {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_SERVICO")
+	@Column(name = "ID")
 	private Integer id;
-	
-	@ManyToOne(targetEntity = Empresa.class)
-//	@JoinColumn(name = "ID_EMPRESA", nullable = false)
-	private Empresa idEmpresa;
-	
-	@OneToMany(mappedBy = "idServico", targetEntity = CarrinhoOrdemServico.class)
-	private List<CarrinhoOrdemServico> carrinhoOrdemServico;
 	
 	@Column(name = "NOME")
 	private String nome;
 	
 	@Column(name = "PRECO")
-	private Double preco;
+	private Float preco;
+	
+	@ManyToOne(targetEntity = Empresa.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Empresa empresa;
+	
+	@ManyToMany(mappedBy = "listaServico", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<OrdemServico> listaOrdemServico = new ArrayList<OrdemServico>();
 
+	// =============================================================== //
+	
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Empresa getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	public void setIdEmpresa(Empresa idEmpresa) {
-		this.idEmpresa = idEmpresa;
-	}
-
-	public List<CarrinhoOrdemServico> getCarrinhoOrdemServico() {
-		return carrinhoOrdemServico;
-	}
-
-	public void setCarrinhoOrdemServico(List<CarrinhoOrdemServico> carrinhoOrdemServico) {
-		this.carrinhoOrdemServico = carrinhoOrdemServico;
 	}
 
 	public String getNome() {
@@ -65,13 +53,27 @@ public class Servico {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
+	public Float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(Float preco) {
 		this.preco = preco;
 	}
-	
-	
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public List<OrdemServico> getListaOrdemServico() {
+		return listaOrdemServico;
+	}
+
+	public void setListaOrdemServico(List<OrdemServico> listaOrdemServico) {
+		this.listaOrdemServico = listaOrdemServico;
+	}
 }

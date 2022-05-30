@@ -1,29 +1,20 @@
 package com.example.pdvsystem.businessLogic.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "INFO_CADASTRO")
 public class InfoCadastro {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_INFO_CADASTRO", nullable = false)
+	@Column(name = "ID")
 	private Integer id;
-	
-	@OneToMany(mappedBy = "idInfoCadastro", targetEntity = Usuario.class)
-	private List<Usuario> usuario;
-	
-	@OneToMany(mappedBy = "idInfoCadastro", targetEntity = Cliente.class)
-	private List<Cliente> cliente;
 	
 	@Column(name = "LOGRADOURO")
 	private String logradouro;
@@ -40,31 +31,20 @@ public class InfoCadastro {
 	@Column(name = "CIDADE")
 	private String cidade;
 	
+	@Column(name = "ESTADO")
+	private String estado;
+	
 	@Column(name = "CEP")
 	private String cep;
 
+	// ============================================================== //
+	
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public List<Usuario> getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(List<Usuario> usuario) {
-		this.usuario = usuario;
-	}
-
-	public List<Cliente> getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(List<Cliente> cliente) {
-		this.cliente = cliente;
 	}
 
 	public String getLogradouro() {
@@ -107,6 +87,14 @@ public class InfoCadastro {
 		this.cidade = cidade;
 	}
 
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	public String getCep() {
 		return cep;
 	}
@@ -114,6 +102,4 @@ public class InfoCadastro {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	
-	
 }
