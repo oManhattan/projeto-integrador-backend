@@ -60,6 +60,23 @@ public class ClienteService {
 		return listCliente;
 	}
 	
+	public Boolean documentoExisteNaEmpresa(Integer id, String documento) {
+		
+		Cliente model = new Cliente();
+		
+		try {
+			model = clienteRepository.documentoExisteAtEmpresa(id, documento);
+		} catch (Exception e) { 
+			return false;
+		}
+		
+		if (model == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public ClienteResponse createCliente(ClienteRequest request) {
 		
 		Cliente model = ClienteConverter.toCliente(request);
@@ -69,5 +86,16 @@ public class ClienteService {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public Boolean deleteCliente(ClienteRequest request) { 
+		
+		try {
+			clienteRepository.delete(ClienteConverter.toCliente(request));
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
 	}
 }
