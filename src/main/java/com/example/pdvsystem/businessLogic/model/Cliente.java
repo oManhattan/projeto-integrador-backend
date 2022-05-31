@@ -29,7 +29,7 @@ public class Cliente {
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@ManyToOne(targetEntity = Empresa.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = Empresa.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private Empresa empresa;
 	
 	@OneToOne(targetEntity = InfoCadastro.class, cascade = CascadeType.ALL)

@@ -20,8 +20,12 @@ public class UsuarioConverter {
 		usuario.setSenha(request.getSenha());
 		usuario.setIsMaster(request.getIsMaster());
 
-		usuario.setEmpresa(EmpresaConverter.toEmpresa(request.getEmpresa()));
-		usuario.setCadastro(InfoCadastroConverter.toInfoCadastro(request.getCadastro()));
+		try {
+			usuario.setEmpresa(EmpresaConverter.toEmpresa(request.getEmpresa()));
+			usuario.setCadastro(InfoCadastroConverter.toInfoCadastro(request.getCadastro()));
+		} catch (Exception e) {
+			
+		}
 
 		return usuario;
 	}
@@ -37,8 +41,12 @@ public class UsuarioConverter {
 		usuario.setSenha(model.getSenha());
 		usuario.setIsMaster(model.getIsMaster());
 
-		usuario.setEmpresa(EmpresaConverter.toEmpresaRequest(model.getEmpresa()));
-		usuario.setCadastro(InfoCadastroConverter.toInfoCadastroRequest(model.getCadastro()));
+		try {
+			usuario.setEmpresa(EmpresaConverter.toEmpresaRequest(model.getEmpresa()));
+			usuario.setCadastro(InfoCadastroConverter.toInfoCadastroRequest(model.getCadastro()));
+		} catch (Exception e) {
+			
+		}
 
 		return usuario;
 	}
@@ -54,8 +62,12 @@ public class UsuarioConverter {
 		usuario.setSenha(model.getSenha());
 		usuario.setIsMaster(model.getIsMaster());
 
-		usuario.setEmpresa(EmpresaConverter.toEmpresaRequest(model.getEmpresa()));
-		usuario.setCadastro(InfoCadastroConverter.toInfoCadastroRequest(model.getCadastro()));
+		try {
+			usuario.setEmpresa(EmpresaConverter.toEmpresaRequest(model.getEmpresa()));
+			usuario.setCadastro(InfoCadastroConverter.toInfoCadastroRequest(model.getCadastro()));
+		} catch (Exception e) {
+			
+		}
 
 		return usuario;
 	}

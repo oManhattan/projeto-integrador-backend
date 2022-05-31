@@ -19,7 +19,7 @@ public class Empresa {
 	@Column(name = "NOME")
 	private String nome;
 	
-	@Column(name = "DOCUMENTO")
+	@Column(name = "DOCUMENTO", unique = true)
 	private String documento;
 	
 	// ============================================================== //

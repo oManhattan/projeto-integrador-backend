@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pdvsystem.api.dto.EmpresaRequest;
 import com.example.pdvsystem.api.dto.EmpresaResponse;
-import com.example.pdvsystem.api.dto.InfoCadastroRequest;
 import com.example.pdvsystem.api.dto.UsuarioRequest;
 import com.example.pdvsystem.api.dto.UsuarioResponse;
 import com.example.pdvsystem.businessLogic.service.EmpresaService;
@@ -31,6 +33,7 @@ public class UsuarioController {
 	@Autowired
 	EmpresaService empresaService;
 	
+	@CrossOrigin
 	@GetMapping(value = "/get/usuario", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UsuarioResponse> getUsuarioById(@RequestParam(value = "id") Integer id) {
 		
@@ -43,6 +46,7 @@ public class UsuarioController {
 		return new ResponseEntity<UsuarioResponse>(response, HttpStatus.FOUND);
 	}
 	
+	@CrossOrigin
 	@GetMapping(value = "/get/usuario/all/empresa", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UsuarioResponse>> getAllUsuarioFromEmpresa(@RequestParam(value = "id") Integer id) {
 		
@@ -55,11 +59,43 @@ public class UsuarioController {
 		return new ResponseEntity<List<UsuarioResponse>>(response, HttpStatus.FOUND);
 	}
 	
-	@PostMapping(value = "/post/usuario", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UsuarioResponse> createUsuario(@RequestBody UsuarioRequest request) {
+	@CrossOrigin
+	@PostMapping(value = "/post/usuario/cadastro", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UsuarioResponse> createUsuarioCadastro(@RequestBody UsuarioRequest request) {
+		
+		if (usuarioService.emailExiste(request.getEmail())) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.CONFLICT);
+		}
+		
+		request.setIsMaster(true);
+		
+		UsuarioResponse response = new UsuarioResponse();
+		
+		response = usuarioService.createUsuario(request);
+		
+		return new ResponseEntity<UsuarioResponse>(response, HttpStatus.CREATED);
+	}
+	
+	@CrossOrigin
+	@PostMapping(value = "/post/usuario/cadastro/concluir", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UsuarioResponse> createUsuario(@RequestParam(value = "id") Integer id, @RequestBody UsuarioRequest request) {
+		
+		if (usuarioService.documentoExiste(request.getDocumento())) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.CONFLICT);
+		}
+		
+		if (empresaService.documentoExiste(request.getEmpresa().getDocumento())) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.CONFLICT);
+		}
 		
 		EmpresaResponse empresa = empresaService.createEmpresa(request.getEmpresa());
 		
+		UsuarioRequest usuario = usuarioService.getUsuarioByIdRequest(id);
+		
+		request.setId(usuario.getId());
+		request.setEmail(usuario.getEmail());
+		request.setSenha(usuario.getSenha());
+		request.setIsMaster(usuario.getIsMaster());
 		request.setEmpresa(empresa);
 		
 		UsuarioResponse response = usuarioService.createUsuario(request);
@@ -71,26 +107,17 @@ public class UsuarioController {
 		return new ResponseEntity<UsuarioResponse>(response, HttpStatus.CREATED);
 	}
 	
-	@PostMapping(value = "/post/usuario/cadastro", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UsuarioResponse> createUsuarioCadastro(@RequestBody UsuarioRequest request) {
-		
-		request.setEmpresa(new EmpresaRequest());
-		request.setCadastro(new InfoCadastroRequest());
-		
-		UsuarioResponse response = new UsuarioResponse();
-		
-		response = usuarioService.createUsuario(request);
-		
-		return new ResponseEntity<UsuarioResponse>(response, HttpStatus.CREATED);
-	}
-	
+	@CrossOrigin
 	@PostMapping(value = "post/usuario/empresa", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UsuarioResponse> createUsuarioWithEmpresa(@RequestParam(value = "id") Integer id, @RequestBody UsuarioRequest request) {
 		
 		EmpresaRequest empresa = empresaService.getEmpresaByIdRequest(id);
 		
+		if (usuarioService.documentoExiste(request.getDocumento()) || usuarioService.emailExiste(request.getEmail())) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.CONFLICT);
+		}
+		
 		if (empresa == null) {
-			System.out.println("Não encontrou empresa");
 			return new ResponseEntity<UsuarioResponse>(HttpStatus.NOT_FOUND);
 		}
 		
@@ -99,10 +126,62 @@ public class UsuarioController {
 		UsuarioResponse response = usuarioService.createUsuario(request);
 		
 		if (response == null) {
-			System.out.println("Usuario null");
 			return new ResponseEntity<UsuarioResponse>(HttpStatus.NOT_FOUND);
 		}
 		
 		return new ResponseEntity<UsuarioResponse>(response, HttpStatus.CREATED);
+	}
+	
+	@CrossOrigin
+	@PostMapping(value = "post/usuario/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UsuarioResponse> validacaoLogin(@RequestBody UsuarioRequest request) {
+		
+		if(!usuarioService.emailExiste(request.getEmail())) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.NOT_FOUND);
+		}
+		
+		if (usuarioService.verificaLogin(request)) {
+			return new ResponseEntity<UsuarioResponse>(usuarioService.getUsuarioByEmail(request.getEmail()), HttpStatus.ACCEPTED);
+		}
+		
+		return new ResponseEntity<UsuarioResponse>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@CrossOrigin
+	@PutMapping(value = "put/usuario/cadastro")
+	public ResponseEntity<UsuarioResponse> atualizarUsuario(@RequestParam(value = "id") Integer id, @RequestBody UsuarioRequest request) {
+		
+		UsuarioRequest usuario = usuarioService.getUsuarioByIdRequest(id);
+		
+		if(usuarioService.emailExiste(request.getEmail()) && !usuario.getEmail().equals(request.getEmail())) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.CONFLICT);
+		}
+		
+		if(usuarioService.documentoExiste(request.getDocumento()) && !usuario.getDocumento().equals(request.getDocumento()) ) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.CONFLICT);
+		}
+		
+		request.setId(id);
+		
+		UsuarioResponse response = usuarioService.createUsuario(request);
+		
+		return new ResponseEntity<UsuarioResponse>(response, HttpStatus.CREATED);
+	}
+	
+	@CrossOrigin
+	@DeleteMapping(value = "delete/usuario")
+	public ResponseEntity<UsuarioResponse> deleteUsuario(@RequestParam(value = "id") Integer id) {
+		
+		UsuarioRequest usuario = usuarioService.getUsuarioByIdRequest(id);
+		
+		if (usuario == null) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.NOT_FOUND);
+		}
+		
+		if(usuarioService.deleteUsuario(usuario)) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.ACCEPTED);
+		}
+		
+		return new ResponseEntity<UsuarioResponse>(HttpStatus.BAD_REQUEST);
 	}
 }

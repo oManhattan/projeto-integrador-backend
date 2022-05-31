@@ -39,6 +39,23 @@ public class EmpresaService {
 		return empresa;
 	}
 	
+	public Boolean documentoExiste(String documento) {
+		
+		Empresa empresa = new Empresa();
+		
+		try {
+			empresa = empresaRepository.findByDocumento(documento);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		if (empresa == null) { 
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public EmpresaResponse createEmpresa(EmpresaRequest empresa) {
 		
 		Empresa model = EmpresaConverter.toEmpresa(empresa);
