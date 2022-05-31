@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -35,10 +34,10 @@ public class Usuario {
 	@Column(name = "IS_MASTER")
 	private Boolean isMaster;
 	
-	@ManyToOne(targetEntity = Empresa.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = Empresa.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
 	private Empresa empresa;
 	
-	@OneToOne(targetEntity = InfoCadastro.class, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = InfoCadastro.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private InfoCadastro cadastro;
 	
 	// ============================================================== //
