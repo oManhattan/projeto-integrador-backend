@@ -73,4 +73,26 @@ public class ProdutoConverter {
 		
 		return lista;
 	}
+	
+	public static List<Produto> toListProduto(List<ProdutoRequest> model) {
+		
+		List<Produto> lista = new ArrayList<Produto>();
+		
+		for (ProdutoRequest p : model) {
+			lista.add(toProduto(p));
+		}
+		
+		return lista;
+	}
+	
+	public static List<ProdutoRequest> toListProdutoRequest(List<Produto> model) {
+		
+		List<ProdutoRequest> lista = new ArrayList<ProdutoRequest>();
+		
+		for (Produto p : model) {
+			lista.add(toProdutoRequest(p));
+		}
+		
+		return lista;
+	}
 }

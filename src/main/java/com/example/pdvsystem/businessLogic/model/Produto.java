@@ -31,11 +31,11 @@ public class Produto {
 	@Column(name = "QUANTIDADE")
 	private Integer quantidade;
 	
-	@ManyToOne(targetEntity = Empresa.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Empresa.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Empresa empresa;
 	
-	@ManyToMany(mappedBy = "listaProduto", cascade = CascadeType.ALL)
-	private List<Venda> listaVenda = new ArrayList<Venda>();
+//	@ManyToMany(mappedBy = "listaProduto", cascade = CascadeType.MERGE)
+//	private List<Venda> listaVenda = new ArrayList<Venda>();
 
 	// ================================================== //
 	
@@ -81,11 +81,11 @@ public class Produto {
 		this.empresa = empresa;
 	}
 
-	public List<Venda> getListaVenda() {
-		return listaVenda;
-	}
-
-	public void setListaVenda(List<Venda> listaVenda) {
-		this.listaVenda = listaVenda;
-	}
+//	public List<Venda> getListaVenda() {
+//		return listaVenda;
+//	}
+//
+//	public void setListaVenda(List<Venda> listaVenda) {
+//		this.listaVenda = listaVenda;
+//	}
 }

@@ -65,13 +65,21 @@ public class ProdutoService {
 		try {
 			response = ProdutoConverter.toProdutoResponse(produtoRepository.save(model));
 		} catch (Exception e) {
+			System.out.println(e);
 			return null;
 		}
 		
 		return response;
 	}
 	
-	public ProdutoResponse updateProduto(ProdutoRequest request) {
+	public Boolean deleteProduto(ProdutoRequest request) {
 		
+		try {
+			produtoRepository.delete(ProdutoConverter.toProduto(request));
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
 	}
 }
