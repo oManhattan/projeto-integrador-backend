@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.pdvsystem.api.dto.AlterarSenhaRequest;
 import com.example.pdvsystem.api.dto.EmpresaRequest;
 import com.example.pdvsystem.api.dto.EmpresaResponse;
 import com.example.pdvsystem.api.dto.UsuarioRequest;
@@ -88,9 +89,13 @@ public class UsuarioController {
 			return new ResponseEntity<UsuarioResponse>(HttpStatus.CONFLICT);
 		}
 		
-		EmpresaResponse empresa = empresaService.createEmpresa(request.getEmpresa());
-		
 		UsuarioRequest usuario = usuarioService.getUsuarioByIdRequest(id);
+		
+		if (usuario == null) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.NOT_FOUND);
+		}
+		
+		EmpresaResponse empresa = empresaService.createEmpresa(request.getEmpresa());
 		
 		request.setId(usuario.getId());
 		request.setEmail(usuario.getEmail());
@@ -166,6 +171,28 @@ public class UsuarioController {
 		UsuarioResponse response = usuarioService.createUsuario(request);
 		
 		return new ResponseEntity<UsuarioResponse>(response, HttpStatus.CREATED);
+	}
+	
+	@CrossOrigin
+	@PutMapping(value = "put/usuario/senha")
+	public ResponseEntity<UsuarioResponse> alterarSenha(@RequestParam(value = "id") Integer id, @RequestBody AlterarSenhaRequest request) {
+		
+		UsuarioRequest usuario = usuarioService.getUsuarioByIdRequest(id);
+		
+		if (usuario == null) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.NOT_FOUND);
+		}
+		
+		if (!usuario.getSenha().equals(request.getSenhaAtual())) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.BAD_REQUEST);
+		}
+		
+		usuario.setSenha(request.getSenhaNova());
+		
+		UsuarioResponse response = usuarioService.createUsuario(usuario);
+		
+		return new ResponseEntity<UsuarioResponse>(response, HttpStatus.ACCEPTED);
+		
 	}
 	
 	@CrossOrigin
