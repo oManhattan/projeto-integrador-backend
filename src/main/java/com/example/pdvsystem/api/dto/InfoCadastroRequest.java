@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"idInfoCadastro", "logradouro", "numero", "complemento", "bairro", "cidade", "cep"})
+@JsonPropertyOrder({"id_cadastro", "logradouro", "numero", "complemento", "bairro", "cidade", "estado", "cep"})
 public class InfoCadastroRequest {
 
 	@JsonInclude(JsonInclude.Include.ALWAYS)
-	@JsonProperty("id_info_cadastro")
-	private Integer idInfoCadastro;
+	@JsonProperty("id_cadastro")
+	private Integer id;
 	
 	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("logradouro")
@@ -32,15 +32,19 @@ public class InfoCadastroRequest {
 	private String cidade;
 	
 	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("estado")
+	private String estado;
+	
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("cep")
 	private String cep;
 
-	public Integer getIdInfoCadastro() {
-		return idInfoCadastro;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdInfoCadastro(Integer idInfoCadastro) {
-		this.idInfoCadastro = idInfoCadastro;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getLogradouro() {
@@ -81,6 +85,14 @@ public class InfoCadastroRequest {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public String getCep() {

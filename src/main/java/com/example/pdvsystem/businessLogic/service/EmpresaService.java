@@ -13,70 +13,61 @@ import com.example.pdvsystem.dataAccess.EmpresaRepository;
 public class EmpresaService {
 
 	@Autowired
-	private EmpresaRepository empresaRepository;
+	EmpresaRepository empresaRepository;
 	
-	public Boolean documentoExiste(EmpresaRequest empresaRequest) {
+	public EmpresaRequest getEmpresaByIdRequest(Integer id) {
+		EmpresaRequest empresa = new EmpresaRequest();
 		
-		Empresa empresa = empresaRepository.findByDocumento(empresaRequest.getDocumento());
+		try {
+			empresa = EmpresaConverter.toEmpresaRequest(empresaRepository.getById(id));
+		} catch (Exception e) {
+			return null;
+		}
 		
-		if (empresa == null) {
+		return empresa;
+	}
+	
+	public EmpresaResponse getEmpresaByIdResponse(Integer id) {
+		EmpresaResponse empresa = new EmpresaResponse();
+		
+		try {
+			empresa = EmpresaConverter.toEmpresaResponse(empresaRepository.getById(id));
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return empresa;
+	}
+	
+	public Boolean documentoExiste(String documento) {
+		
+		Empresa empresa = new Empresa();
+		
+		try {
+			empresa = empresaRepository.findByDocumento(documento);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		if (empresa == null) { 
 			return false;
 		}
 		
 		return true;
 	}
 	
-	public Boolean empresaExiste(Integer id) {
+	public EmpresaResponse createEmpresa(EmpresaRequest empresa) {
 		
-		if (empresaRepository.getById(id) == null) {
-			return false;
+		Empresa model = EmpresaConverter.toEmpresa(empresa);
+		EmpresaResponse response = new EmpresaResponse();
+		
+		try {
+			response = EmpresaConverter.toEmpresaResponse(empresaRepository.saveAndFlush(model));
+		} catch (Exception e) {
+			return null;
 		}
 		
-		return true;
+		return response;
 	}
 	
-	public EmpresaResponse criarEmpresa(EmpresaRequest empresaRequest) {
-		
-		Empresa novaEmpresa = EmpresaConverter.toEmpresa(empresaRequest);
-		return EmpresaConverter.toEmpresaResponse(empresaRepository.save(novaEmpresa));
-	}
-	
-	public EmpresaResponse atualizarEmpresa(EmpresaRequest empresaRequest) {
-		
-		if (empresaRepository.findById(empresaRequest.getIdEmpresa()).isEmpty()) {
-			throw new RuntimeException("Empresa não encontrada");
-		}
-		
-		Empresa novaEmpresa = EmpresaConverter.toEmpresa(empresaRequest);
-		return EmpresaConverter.toEmpresaResponse(empresaRepository.save(novaEmpresa));
-	}
-	
-	public EmpresaResponse buscarEmpresaPorId(Integer id) {
-		
-		EmpresaResponse empresaResponse = new EmpresaResponse();
-		
-		empresaResponse = EmpresaConverter.toEmpresaResponse(empresaRepository.getById(id));
-		
-		return empresaResponse;
-	}
-	
-	public EmpresaResponse excluirEmpresa(Integer id) {
-		
-		if (empresaRepository.findById(id).isEmpty()) {
-			throw new RuntimeException("Empresa não encontrada");
-		}
-		
-		EmpresaResponse empresaResponse = new EmpresaResponse();
-		empresaResponse.setIdEmpresa(id);
-		
-		empresaRepository.deleteById(id);
-		return empresaResponse;
-	}
-	
-	public EmpresaResponse getEmpresaById(Integer id) {
-		
-		Empresa empresa = empresaRepository.getById(id);
-		
-		return EmpresaConverter.toEmpresaResponse(empresa);
-	}
 }

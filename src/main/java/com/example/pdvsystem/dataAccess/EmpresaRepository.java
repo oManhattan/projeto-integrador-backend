@@ -9,4 +9,5 @@ import com.example.pdvsystem.businessLogic.model.Empresa;
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer>{
 
 	Empresa findByDocumento(String documento);
+	
 }

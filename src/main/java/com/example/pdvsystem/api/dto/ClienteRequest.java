@@ -4,39 +4,39 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"idCliente", "empresa", "nome", "email", "documento", "infoCadastro"})
+@JsonPropertyOrder({"id_cliente", "nome", "documento", "email", "empresa", "cadastro"})
 public class ClienteRequest {
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_cliente")
-	private Integer idCliente;
+	private Integer id;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("id_empresa")
-	private EmpresaRequest empresa;
-	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("nome")
 	private String nome;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("email")
-	private String email;
-	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("documento")
 	private String documento;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("id_info_cadastro")
-	private InfoCadastroRequest infoCadastro;
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("email")
+	private String email;
+	
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("empresa")
+	private EmpresaRequest empresa;
+	
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("cadastro")
+	private InfoCadastroRequest cadastro;
 
-	public Integer getIdCliente() {
-		return idCliente;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -47,20 +47,20 @@ public class ClienteRequest {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getDocumento() {
 		return documento;
 	}
 
 	public void setDocumento(String documento) {
 		this.documento = documento;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public EmpresaRequest getEmpresa() {
@@ -71,11 +71,11 @@ public class ClienteRequest {
 		this.empresa = empresa;
 	}
 
-	public InfoCadastroRequest getInfoCadastro() {
-		return infoCadastro;
+	public InfoCadastroRequest getCadastro() {
+		return cadastro;
 	}
 
-	public void setInfoCadastro(InfoCadastroRequest infoCadastro) {
-		this.infoCadastro = infoCadastro;
-	}	
+	public void setCadastro(InfoCadastroRequest cadastro) {
+		this.cadastro = cadastro;
+	}
 }

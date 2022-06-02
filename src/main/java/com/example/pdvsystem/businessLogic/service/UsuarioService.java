@@ -16,95 +16,125 @@ import com.example.pdvsystem.dataAccess.UsuarioRepository;
 public class UsuarioService {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	UsuarioRepository usuarioRepository;
 	
-	public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest) { 
+	public UsuarioResponse getUsuarioByIdResponse(Integer id) {
 		
-		Usuario novoUsuario = UsuarioConverter.toUsuario(usuarioRequest);
+		UsuarioResponse response = new UsuarioResponse();
 		
-		return UsuarioConverter.toUsuarioResponse(usuarioRepository.save(novoUsuario));
+		try {
+			Usuario model = usuarioRepository.getById(id);
+			response = UsuarioConverter.toUsuarioResponse(model);
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return response;
 	}
 	
-	public Boolean usuarioExiste(Integer id) {
+	public UsuarioResponse getUsuarioByEmail(String email) {
 		
-		if (usuarioRepository.getById(id) == null) {
+		return UsuarioConverter.toUsuarioResponse(usuarioRepository.findByEmail(email));
+	}
+	
+	public List<UsuarioResponse> getAllUsuarioFromEmpresa(Integer id) {
+		
+		List<UsuarioResponse> listaUsuario = new ArrayList<UsuarioResponse>();
+		
+		try {
+			listaUsuario = UsuarioConverter.toListUsuarioResponse(usuarioRepository.findUsuarioByEmpresaId(id));
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return listaUsuario;
+	}
+	
+	public UsuarioRequest getUsuarioByIdRequest(Integer id) {
+		
+		UsuarioRequest request = new UsuarioRequest();
+		
+		try {
+			Usuario model = usuarioRepository.getById(id);
+			request = UsuarioConverter.toUsuarioRequest(model);
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return request;
+	}
+	
+	public UsuarioResponse createUsuario(UsuarioRequest request) {
+		
+		Usuario model = UsuarioConverter.toUsuario(request);
+		
+		try {
+			return UsuarioConverter.toUsuarioResponse(usuarioRepository.save(model));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public Boolean emailExiste(String email) {
+		
+		Usuario usuario = new Usuario();
+		
+		try {
+			usuario = usuarioRepository.findByEmail(email);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		if (usuario == null) {
 			return false;
 		}
 		
 		return true;
 	}
 	
-	public Boolean loginValidation(UsuarioRequest usuarioRequest) {
+	public Boolean documentoExiste(String documento) {
 		
-		if (!emailExiste(usuarioRequest)) {
+		Usuario usuario = new Usuario();
+		
+		try {
+			usuario = usuarioRepository.findByDocumento(documento);
+		} catch (Exception e) {
 			return false;
 		}
 		
-		Usuario usuario = usuarioRepository.findByEmail(usuarioRequest.getEmail());
+		if (usuario == null) {
+			return false;
+		}
 		
-		if (usuario.getSenha().equals(usuarioRequest.getSenha())) {
+		return true;
+	}
+	
+	public Boolean verificaLogin(UsuarioRequest request) {
+		
+		Usuario usuario = new Usuario();
+		
+		try {
+			usuario = usuarioRepository.findByEmail(request.getEmail());
+		} catch (Exception e) {
+			return false;
+		}
+		
+		if (usuario.getEmail().equals(request.getEmail()) && usuario.getSenha().equals(request.getSenha())) {
 			return true;
 		}
 		
 		return false;
 	}
 	
-	public Boolean documentoExiste(UsuarioRequest usuarioRequest) {
+	public Boolean deleteUsuario(UsuarioRequest request) {
 		
-		Usuario usuario = usuarioRepository.findByDocumento(usuarioRequest.getDocumento());
-		
-		if (usuario == null) {
+		try {
+			usuarioRepository.delete(UsuarioConverter.toUsuario(request));
+		} catch (Exception e) {
 			return false;
 		}
 		
 		return true;
 	}
 	
-	public Boolean emailExiste(UsuarioRequest usuarioRequest) {
-		
-		Usuario usuario = usuarioRepository.findByEmail(usuarioRequest.getEmail());
-		
-		if (usuario == null) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public UsuarioResponse getUsuarioByEmail(UsuarioRequest usuarioRequest) {
-		
-		if (!emailExiste(usuarioRequest)) {
-			return null;
-		}
-		
-		return UsuarioConverter.toUsuarioResponse(usuarioRepository.findByEmail(usuarioRequest.getEmail()));
-		
-	}
-	
-	public UsuarioResponse atualizarUsuario(UsuarioRequest usuarioRequest) {
-		
-		if (usuarioRepository.findById(usuarioRequest.getIdUsuario()).isEmpty()) {
-			throw new RuntimeException("Usuário não encontrado");
-		}
-		
-		Usuario usuario = UsuarioConverter.toUsuario(usuarioRequest);
-		return UsuarioConverter.toUsuarioResponse(usuarioRepository.save(usuario));
-	}
-	
-	public UsuarioResponse getUsuariobyId(Integer id) {
-		
-		UsuarioResponse usuarioResponse = UsuarioConverter.toUsuarioResponse(usuarioRepository.getById(id));
-		return usuarioResponse;
-	}
-	
-	public List<UsuarioResponse> getAllUsuarios() {
-		List<Usuario> listaUsuario = usuarioRepository.findAll();
-		List<UsuarioResponse> convertedList = new ArrayList<UsuarioResponse>();
-		
-		for (int i = 0; i < listaUsuario.size(); i++) {
-			convertedList.add(UsuarioConverter.toUsuarioResponse(listaUsuario.get(i)));
-		}
-		
-		return convertedList;
-	}
 }

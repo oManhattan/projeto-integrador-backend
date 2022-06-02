@@ -7,5 +7,5 @@ import com.example.pdvsystem.businessLogic.model.InfoCadastro;
 
 @Repository
 public interface InfoCadastroRepository extends JpaRepository<InfoCadastro, Integer> {
-	
+
 }

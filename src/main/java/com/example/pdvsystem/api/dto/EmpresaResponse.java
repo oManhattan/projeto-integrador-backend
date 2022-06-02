@@ -2,7 +2,7 @@ package com.example.pdvsystem.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"idEmpresa", "nomeEmpresa", "documento"})
-public class EmpresaResponse extends EmpresaRequest{
+@JsonPropertyOrder({"id_empresa", "nome", "documento"})
+public class EmpresaResponse extends EmpresaRequest {
 
 }

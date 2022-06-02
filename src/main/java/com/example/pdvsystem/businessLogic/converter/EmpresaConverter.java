@@ -6,34 +6,35 @@ import com.example.pdvsystem.businessLogic.model.Empresa;
 
 public class EmpresaConverter {
 
-	public static EmpresaResponse toEmpresaResponse(Empresa empresa) {
-		
-		EmpresaResponse empresaResponse = new EmpresaResponse();
-		
-		empresaResponse.setIdEmpresa(empresa.getId());
-		empresaResponse.setNomeEmpresa(empresa.getNomeEmpresa());
-		empresaResponse.setDocumento(empresa.getDocumento());
-		
-		return empresaResponse;
-	}
-	
-	public static EmpresaRequest toEmpresaRequest(Empresa empresa) {
-		EmpresaRequest empresaRequest = new EmpresaRequest();
-		
-		empresaRequest.setIdEmpresa(empresa.getId());
-		empresaRequest.setNomeEmpresa(empresa.getNomeEmpresa());
-		empresaRequest.setDocumento(empresa.getDocumento());
-		
-		return empresaRequest;
-	}
-	
-	public static Empresa toEmpresa(EmpresaRequest empresaRequest) {
+	public static Empresa toEmpresa(EmpresaRequest request) {
 		
 		Empresa empresa = new Empresa();
 		
-		empresa.setId(empresaRequest.getIdEmpresa());
-		empresa.setNomeEmpresa(empresaRequest.getNomeEmpresa());
-		empresa.setDocumento(empresaRequest.getDocumento());
+		empresa.setId(request.getId());
+		empresa.setNome(request.getNome());
+		empresa.setDocumento(request.getDocumento());
+		
+		return empresa;
+	}
+	
+	public static EmpresaRequest toEmpresaRequest(Empresa model) {
+		
+		EmpresaRequest empresa = new EmpresaRequest();
+		
+		empresa.setId(model.getId());
+		empresa.setNome(model.getNome());
+		empresa.setDocumento(model.getDocumento());
+		
+		return empresa;
+	}
+	
+	public static EmpresaResponse toEmpresaResponse(Empresa model) {
+		
+		EmpresaResponse empresa = new EmpresaResponse();
+		
+		empresa.setId(model.getId());
+		empresa.setNome(model.getNome());
+		empresa.setDocumento(model.getDocumento());
 		
 		return empresa;
 	}

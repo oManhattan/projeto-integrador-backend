@@ -4,43 +4,35 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"idProduto", "empresa", "nome", "preco", "quantidade"})
+@JsonPropertyOrder({"id_produto", "nome", "preco", "quantidade", "empresa"})
 public class ProdutoRequest {
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_produto")
-	private Integer idProduto;
+	private Integer id;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonProperty("id_empresa")
-	private EmpresaRequest empresa;
-	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("nome")
 	private String nome;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("preco")
-	private Double preco;
+	private Float preco;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("quantidade")
 	private Integer quantidade;
 
-	public Integer getIdProduto() {
-		return idProduto;
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("empresa")
+	private EmpresaRequest empresa;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdProduto(Integer idProduto) {
-		this.idProduto = idProduto;
-	}
-	
-	public EmpresaRequest getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(EmpresaRequest empresa) {
-		this.empresa = empresa;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -51,11 +43,11 @@ public class ProdutoRequest {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
+	public Float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(Float preco) {
 		this.preco = preco;
 	}
 
@@ -65,5 +57,13 @@ public class ProdutoRequest {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public EmpresaRequest getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(EmpresaRequest empresa) {
+		this.empresa = empresa;
 	}
 }

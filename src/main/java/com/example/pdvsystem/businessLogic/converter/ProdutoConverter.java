@@ -1,60 +1,98 @@
 package com.example.pdvsystem.businessLogic.converter;
 
-import com.example.pdvsystem.api.dto.EmpresaRequest;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.pdvsystem.api.dto.ProdutoRequest;
 import com.example.pdvsystem.api.dto.ProdutoResponse;
-import com.example.pdvsystem.businessLogic.model.Empresa;
 import com.example.pdvsystem.businessLogic.model.Produto;
 
 public class ProdutoConverter {
 
-	public static ProdutoResponse toProdutoResponse(Produto produto) {
+	public static Produto toProduto(ProdutoRequest request) {
 		
-		ProdutoResponse produtoResponse = new ProdutoResponse();
+		Produto p = new Produto();
 		
-		produtoResponse.setIdProduto(produto.getId());
-		produtoResponse.setNome(produto.getNome());
-		produtoResponse.setPreco(produto.getPreco());
-		produtoResponse.setQuantidade(produto.getQuantidade());
+		p.setId(request.getId());
+		p.setNome(request.getNome());
+		p.setPreco(request.getPreco());
+		p.setQuantidade(request.getQuantidade());
 		
-		EmpresaRequest empresaRequest = new EmpresaRequest();
-		empresaRequest.setIdEmpresa(produto.getIdEmpresa().getId());
+		try {
+			p.setEmpresa(EmpresaConverter.toEmpresa(request.getEmpresa()));
+		} catch (Exception e) {
+			
+		}
 		
-		produtoResponse.setEmpresa(empresaRequest);
-		
-		return produtoResponse;
+		return p;
 	}
 	
-	public static ProdutoRequest toProdutoRequest(Produto produto) {
+	public static ProdutoRequest toProdutoRequest(Produto model) {
+		 
+		ProdutoRequest p = new ProdutoRequest();
 		
-		ProdutoRequest produtoRequest = new ProdutoRequest();
+		p.setId(model.getId());
+		p.setNome(model.getNome());
+		p.setPreco(model.getPreco());
+		p.setQuantidade(model.getQuantidade());
 		
-		produtoRequest.setIdProduto(produto.getId());
-		produtoRequest.setNome(produto.getNome());
-		produtoRequest.setPreco(produto.getPreco());
-		produtoRequest.setQuantidade(produto.getQuantidade());
+		try {
+			p.setEmpresa(EmpresaConverter.toEmpresaRequest(model.getEmpresa()));
+		} catch (Exception e) {
+			
+		}
 		
-		EmpresaRequest empresaRequest = new EmpresaRequest();
-		empresaRequest.setIdEmpresa(produto.getIdEmpresa().getId());
-		
-		produtoRequest.setEmpresa(empresaRequest);
-		
-		return produtoRequest;
+		return p;
 	}
 	
-	public static Produto toProduto(ProdutoRequest produtoRequest) {
+	public static ProdutoResponse toProdutoResponse(Produto model) {
 		
-		Produto produto = new Produto();
+		ProdutoResponse p = new ProdutoResponse();
 		
-		produto.setId(produtoRequest.getIdProduto());
-		produto.setNome(produtoRequest.getNome());
-		produto.setPreco(produtoRequest.getPreco());
-		produto.setQuantidade(produtoRequest.getQuantidade());
+		p.setId(model.getId());
+		p.setNome(model.getNome());
+		p.setPreco(model.getPreco());
+		p.setQuantidade(model.getQuantidade());
 		
-		Empresa empresa = new Empresa();
-		empresa.setId(produtoRequest.getEmpresa().getIdEmpresa());
-		produto.setIdEmpresa(empresa);
+		try {
+			p.setEmpresa(EmpresaConverter.toEmpresaRequest(model.getEmpresa()));
+		} catch (Exception e) {
+			
+		}
 		
-		return produto;
+		return p;
+	}
+	
+	public static List<ProdutoResponse> toListProdutoResponse(List<Produto> model) {
+		
+		List<ProdutoResponse> lista = new ArrayList<ProdutoResponse>();
+		
+		for (Produto p : model) {
+			lista.add(toProdutoResponse(p));
+		}
+		
+		return lista;
+	}
+	
+	public static List<Produto> toListProduto(List<ProdutoRequest> model) {
+		
+		List<Produto> lista = new ArrayList<Produto>();
+		
+		for (ProdutoRequest p : model) {
+			lista.add(toProduto(p));
+		}
+		
+		return lista;
+	}
+	
+	public static List<ProdutoRequest> toListProdutoRequest(List<Produto> model) {
+		
+		List<ProdutoRequest> lista = new ArrayList<ProdutoRequest>();
+		
+		for (Produto p : model) {
+			lista.add(toProdutoRequest(p));
+		}
+		
+		return lista;
 	}
 }

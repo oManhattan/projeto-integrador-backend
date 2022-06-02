@@ -1,14 +1,13 @@
 package com.example.pdvsystem.businessLogic.model;
 
-import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,47 +16,31 @@ public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_PRODUTO", nullable = false)
 	private Integer id;
 	
-	@ManyToOne(targetEntity = Empresa.class)
-//	@JoinColumn(name = "ID_EMPRESA", nullable = false)
-	private Empresa idEmpresa;
-	
-	@OneToMany(mappedBy = "idProduto", targetEntity = CarrinhoVenda.class)
-	private List<CarrinhoVenda> carrinhoVenda;
-	
-	@Column(name = "NOME", nullable = false)
+	@Column(name = "NOME")
 	private String nome;
 	
-	@Column(name = "PRECO", nullable = false)
-	private Double preco;
-
+	@Column(name = "PRECO")
+	private Float preco;
+	
 	@Column(name = "QUANTIDADE")
 	private Integer quantidade;
+	
+	@ManyToOne(targetEntity = Empresa.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	private Empresa empresa;
+	
+//	@ManyToMany(mappedBy = "listaProduto", cascade = CascadeType.MERGE)
+//	private List<Venda> listaVenda = new ArrayList<Venda>();
 
+	// ================================================== //
+	
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Empresa getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	public void setIdEmpresa(Empresa idEmpresa) {
-		this.idEmpresa = idEmpresa;
-	}
-
-	public List<CarrinhoVenda> getCarrinhoVenda() {
-		return carrinhoVenda;
-	}
-
-	public void setCarrinhoVenda(List<CarrinhoVenda> carrinhoVenda) {
-		this.carrinhoVenda = carrinhoVenda;
 	}
 
 	public String getNome() {
@@ -68,11 +51,11 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
+	public Float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(Float preco) {
 		this.preco = preco;
 	}
 
@@ -83,6 +66,22 @@ public class Produto {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
+
+	// ================================================== //
 	
-	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+//	public List<Venda> getListaVenda() {
+//		return listaVenda;
+//	}
+//
+//	public void setListaVenda(List<Venda> listaVenda) {
+//		this.listaVenda = listaVenda;
+//	}
 }

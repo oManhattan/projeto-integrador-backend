@@ -6,48 +6,52 @@ import com.example.pdvsystem.businessLogic.model.InfoCadastro;
 
 public class InfoCadastroConverter {
 
-	public static InfoCadastroResponse toInfoCadastroResponse(InfoCadastro infoCadastro) {
+	public static InfoCadastro toInfoCadastro(InfoCadastroRequest request) {
 		
-		InfoCadastroResponse infoCadastroResponse = new InfoCadastroResponse();
+		InfoCadastro cadastro = new InfoCadastro();
 		
-		infoCadastroResponse.setIdInfoCadastro(infoCadastro.getId());
-		infoCadastroResponse.setLogradouro(infoCadastro.getLogradouro());
-		infoCadastroResponse.setNumero(infoCadastro.getNumero());
-		infoCadastroResponse.setComplemento(infoCadastro.getComplemento());
-		infoCadastroResponse.setBairro(infoCadastro.getBairro());
-		infoCadastroResponse.setCidade(infoCadastro.getCidade());
-		infoCadastroResponse.setCep(infoCadastro.getCep());
+		cadastro.setId(request.getId());
+		cadastro.setLogradouro(request.getLogradouro());
+		cadastro.setNumero(request.getNumero());
+		cadastro.setComplemento(request.getComplemento());
+		cadastro.setBairro(request.getBairro());
+		cadastro.setCidade(request.getCidade());
+		cadastro.setEstado(request.getEstado());
+		cadastro.setCep(request.getCep());
 		
-		return infoCadastroResponse;
+		return cadastro;
 	}
 	
-	public static InfoCadastroRequest toInfoCadastroRequest(InfoCadastro infoCadastro) {
+	public static InfoCadastroRequest toInfoCadastroRequest(InfoCadastro model) {
 		
-		InfoCadastroRequest infoCadastroRequest = new InfoCadastroRequest();
+		InfoCadastroRequest cadastro = new InfoCadastroRequest();
 		
-		infoCadastroRequest.setIdInfoCadastro(infoCadastro.getId());
-		infoCadastroRequest.setLogradouro(infoCadastro.getLogradouro());
-		infoCadastroRequest.setNumero(infoCadastro.getNumero());
-		infoCadastroRequest.setComplemento(infoCadastro.getComplemento());
-		infoCadastroRequest.setBairro(infoCadastro.getBairro());
-		infoCadastroRequest.setCidade(infoCadastro.getCidade());
-		infoCadastroRequest.setCep(infoCadastro.getCep());
+		cadastro.setId(model.getId());
+		cadastro.setLogradouro(model.getLogradouro());
+		cadastro.setNumero(model.getNumero());
+		cadastro.setComplemento(model.getComplemento());
+		cadastro.setBairro(model.getBairro());
+		cadastro.setCidade(model.getCidade());
+		cadastro.setEstado(model.getEstado());
+		cadastro.setCep(model.getCep());
 		
-		return infoCadastroRequest;
+		return cadastro;
 	}
 	
-	public static InfoCadastro toInfoCadastro(InfoCadastroRequest infoCadastroRequest) {
+	public static InfoCadastroResponse toInfoCadastroResponse(InfoCadastro model) {
 		
-		InfoCadastro infoCadastro = new InfoCadastro();
+		InfoCadastroResponse cadastro = new InfoCadastroResponse();
 		
-		infoCadastro.setId(infoCadastroRequest.getIdInfoCadastro());
-		infoCadastro.setLogradouro(infoCadastroRequest.getLogradouro());
-		infoCadastro.setNumero(infoCadastroRequest.getNumero());
-		infoCadastro.setComplemento(infoCadastroRequest.getComplemento());
-		infoCadastro.setBairro(infoCadastroRequest.getBairro());
-		infoCadastro.setCidade(infoCadastroRequest.getCidade());
-		infoCadastro.setCep(infoCadastroRequest.getCep());
+		cadastro.setId(model.getId());
+		cadastro.setLogradouro(model.getLogradouro());
+		cadastro.setNumero(model.getNumero());
+		cadastro.setComplemento(model.getComplemento());
+		cadastro.setBairro(model.getBairro());
+		cadastro.setCidade(model.getCidade());
+		cadastro.setEstado(model.getEstado());
+		cadastro.setCep(model.getCep());
 		
-		return infoCadastro;
+		return cadastro;
 	}
+	
 }

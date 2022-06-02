@@ -1,44 +1,44 @@
-package com.example.pdvsystem.businessLogic.model;
+package com.example.pdvsystem.api.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@Entity
-@Table(name = "INFO_CADASTRO")
-public class InfoCadastro {
+@JsonPropertyOrder({"id_cadastro", "logradouro", "numero", "complemento", "bairro", "cidade", "estado", "cep"})
+public class InfoCadastrorRequest {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("id_cadastro")
 	private Integer id;
-	
-	@Column(name = "LOGRADOURO")
+
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("logradouro")
 	private String logradouro;
 	
-	@Column(name = "NUMERO")
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("numero")
 	private String numero;
 	
-	@Column(name = "COMPLEMENTO")
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("complemento")
 	private String complemento;
 	
-	@Column(name = "BAIRRO")
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("bairro")
 	private String bairro;
 	
-	@Column(name = "CIDADE")
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("cidade")
 	private String cidade;
 	
-	@Column(name = "ESTADO")
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("estado")
 	private String estado;
 	
-	@Column(name = "CEP")
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("cep")
 	private String cep;
 
-	// ============================================================== //
-	
 	public Integer getId() {
 		return id;
 	}

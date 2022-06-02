@@ -1,48 +1,48 @@
 package com.example.pdvsystem.businessLogic.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ORDEM_SERVICO")
 public class OrdemServico {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_ORDEM_SERVICO")
+	@Column(name = "ID")
 	private Integer id;
 	
-	@ManyToOne(targetEntity = Empresa.class)
-//	@JoinColumn(name = "ID_EMPRESA")
-	private Empresa idEmpresa;
-	
-	@ManyToOne(targetEntity = Usuario.class)
-//	@JoinColumn(name = "ID_USUARIO")
-	private Usuario idUsuario;
-	
-	@ManyToOne(targetEntity = Cliente.class)
-//	@JoinColumn(name = "ID_CLIENTE")
-	private Cliente idCliente;
-	
-	@OneToMany(mappedBy = "idOrdemServico", targetEntity = CarrinhoOrdemServico.class)
-	private List<CarrinhoOrdemServico> carrinhoOrdemServico;
+	@Column(name = "METODO_PAGAMENTO")
+	private String metodoPagamento;
 	
 	@Column(name = "DESCRICAO")
 	private String descricao;
 	
-	@Column(name = "VALOR_TOTAL", nullable = false)
-	private Double valorTotal;
+	@Column(name = "VALOR_TOTAL")
+	private Float valorTotal;
 	
-	@Column(name = "METODO_PAGAMENTO", nullable = false)
-	private String metodoPagamento;
+	@ManyToOne(targetEntity = Empresa.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Empresa empresa;
+	
+	@ManyToOne(targetEntity = Cliente.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Cliente cliente;
+	
+	@ManyToOne(targetEntity = Usuario.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Usuario usuario;
+	
+	@ManyToMany(targetEntity = Servico.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Servico> listaServico = new ArrayList<Servico>();
 
 	public Integer getId() {
 		return id;
@@ -52,36 +52,12 @@ public class OrdemServico {
 		this.id = id;
 	}
 
-	public Empresa getIdEmpresa() {
-		return idEmpresa;
+	public String getMetodoPagamento() {
+		return metodoPagamento;
 	}
 
-	public void setIdEmpresa(Empresa idEmpresa) {
-		this.idEmpresa = idEmpresa;
-	}
-
-	public Usuario getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(Usuario idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public Cliente getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(Cliente idCliente) {
-		this.idCliente = idCliente;
-	}
-
-	public List<CarrinhoOrdemServico> getCarrinhoOrdemServico() {
-		return carrinhoOrdemServico;
-	}
-
-	public void setCarrinhoOrdemServico(List<CarrinhoOrdemServico> carrinhoOrdemServico) {
-		this.carrinhoOrdemServico = carrinhoOrdemServico;
+	public void setMetodoPagamento(String metodoPagamento) {
+		this.metodoPagamento = metodoPagamento;
 	}
 
 	public String getDescricao() {
@@ -92,19 +68,43 @@ public class OrdemServico {
 		this.descricao = descricao;
 	}
 
-	public Double getValorTotal() {
+	public Float getValorTotal() {
 		return valorTotal;
 	}
 
-	public void setValorTotal(Double valorTotal) {
+	public void setValorTotal(Float valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 
-	public String getMetodoPagamento() {
-		return metodoPagamento;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setMetodoPagamento(String metodoPagamento) {
-		this.metodoPagamento = metodoPagamento;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<Servico> getListaServico() {
+		return listaServico;
+	}
+
+	public void setListaServico(List<Servico> listaServico) {
+		this.listaServico = listaServico;
 	}
 }

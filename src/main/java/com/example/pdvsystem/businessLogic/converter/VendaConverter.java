@@ -1,86 +1,85 @@
 package com.example.pdvsystem.businessLogic.converter;
 
-import com.example.pdvsystem.api.dto.ClienteRequest;
-import com.example.pdvsystem.api.dto.EmpresaRequest;
-import com.example.pdvsystem.api.dto.UsuarioRequest;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.pdvsystem.api.dto.VendaRequest;
 import com.example.pdvsystem.api.dto.VendaResponse;
-import com.example.pdvsystem.businessLogic.model.Cliente;
-import com.example.pdvsystem.businessLogic.model.Empresa;
-import com.example.pdvsystem.businessLogic.model.Usuario;
 import com.example.pdvsystem.businessLogic.model.Venda;
 
 public class VendaConverter {
 
-	public static VendaResponse toVendaResponse(Venda venda) {
-		
-		VendaResponse vendaResponse = new VendaResponse();
+	public static Venda toVenda(VendaRequest request) {
 
-		vendaResponse.setIdVenda(venda.getId());
-		vendaResponse.setPrecoTotal(venda.getPrecoTotal());
+		Venda v = new Venda();
+
+		v.setId(request.getId());
+		v.setDataVenda(request.getDataVenda());
+		v.setMetodoPagamento(request.getMetodoPagamento());
+		v.setValorTotal(request.getValorTotal());
+		v.setUsuario(UsuarioConverter.toUsuario(request.getUsuario()));
+		v.setCliente(ClienteConverter.toCliente(request.getCliente()));
+		v.setEmpresa(EmpresaConverter.toEmpresa(request.getEmpresa()));
 		
-		EmpresaRequest empresaRequest = new EmpresaRequest();
-		empresaRequest.setIdEmpresa(venda.getIdEmpresa().getId());
+		try {
+			v.setListaProduto(ProdutoConverter.toListProduto(request.getListaProduto()));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return v;
+	}
+
+	public static VendaRequest toVendaRequest(Venda model) {
+
+		VendaRequest v = new VendaRequest();
+
+		v.setId(model.getId());
+		v.setDataVenda(model.getDataVenda());
+		v.setMetodoPagamento(model.getMetodoPagamento());
+		v.setValorTotal(model.getValorTotal());
+		v.setUsuario(UsuarioConverter.toUsuarioRequest(model.getUsuario()));
+		v.setCliente(ClienteConverter.toClienteRequest(model.getCliente()));
+		v.setEmpresa(EmpresaConverter.toEmpresaRequest(model.getEmpresa()));
 		
-		vendaResponse.setEmpresa(empresaRequest);
+		try {
+			v.setListaProduto(ProdutoConverter.toListProdutoRequest(model.getListaProduto()));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return v;
+	}
+
+	public static VendaResponse toVendaResponse(Venda model) {
+
+		VendaResponse v = new VendaResponse();
+
+		v.setId(model.getId());
+		v.setDataVenda(model.getDataVenda());
+		v.setMetodoPagamento(model.getMetodoPagamento());
+		v.setValorTotal(model.getValorTotal());
+		v.setUsuario(UsuarioConverter.toUsuarioResponse(model.getUsuario()));
+		v.setCliente(ClienteConverter.toClienteResponse(model.getCliente()));
+		v.setEmpresa(EmpresaConverter.toEmpresaResponse(model.getEmpresa()));
 		
-		UsuarioRequest usuarioRequest = new UsuarioRequest();
-		usuarioRequest.setIdUsuario(venda.getIdUsuario().getId());
-		
-		vendaResponse.setUsuario(usuarioRequest);
-		
-		ClienteRequest clienteRequest = new ClienteRequest();
-		clienteRequest.setIdCliente(venda.getIdCliente().getId());
-		
-		vendaResponse.setCliente(clienteRequest);
-		
-		return vendaResponse;
+		try {
+			v.setListaProduto(ProdutoConverter.toListProdutoRequest(model.getListaProduto()));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return v;
 	}
 	
-	public static VendaRequest toVendaRequest(Venda venda) {
+	public static List<VendaResponse> toListVendaResponse(List<Venda> model) {
 		
-		VendaRequest vendaRequest = new VendaRequest();
+		List<VendaResponse> response = new ArrayList<VendaResponse>();
 		
-		vendaRequest.setIdVenda(venda.getId());
-		vendaRequest.setPrecoTotal(venda.getPrecoTotal());
+		for (Venda v : model) {
+			response.add(toVendaResponse(v));
+		}
 		
-		EmpresaRequest empresaRequest = new EmpresaRequest();
-		empresaRequest.setIdEmpresa(venda.getIdEmpresa().getId());
-		
-		vendaRequest.setEmpresa(empresaRequest);
-		
-		UsuarioRequest usuarioRequest = new UsuarioRequest();
-		usuarioRequest.setIdUsuario(venda.getIdUsuario().getId());
-		
-		vendaRequest.setUsuario(usuarioRequest);
-		
-		ClienteRequest clienteRequest = new ClienteRequest();
-		clienteRequest.setIdCliente(venda.getIdCliente().getId());
-		
-		vendaRequest.setCliente(clienteRequest);
-		
-		return vendaRequest;
+		return response;
 	}
-	
-	public static Venda toVenda(VendaRequest vendaRequest) {
-		
-		Venda venda = new Venda();
-		
-		venda.setId(vendaRequest.getIdVenda());
-		
-		Empresa empresa = new Empresa();
-		empresa.setId(vendaRequest.getEmpresa().getIdEmpresa());
-		venda.setIdEmpresa(empresa);
-		
-		Usuario usuario = new Usuario();
-		usuario.setId(vendaRequest.getUsuario().getIdUsuario());
-		venda.setIdUsuario(usuario);
-		
-		Cliente cliente = new Cliente();
-		cliente.setId(vendaRequest.getCliente().getIdCliente());
-		venda.setIdCliente(cliente);
-		
-		return venda;
-	}
-	
 }

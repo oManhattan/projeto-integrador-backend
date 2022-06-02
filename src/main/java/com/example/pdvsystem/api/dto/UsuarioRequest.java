@@ -1,51 +1,50 @@
 package com.example.pdvsystem.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"idUsuario", "empresa", "nome", "isMaster", "email", "senha", "documento", "infoCadastro"})
+@JsonPropertyOrder({"id_usuario", "nome", "documento", "email", "senha", "is_master", "empresa", "cadastro"})
 public class UsuarioRequest {
 
 	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("id_usuario")
-	private Integer idUsuario; 
-	
-	@JsonInclude(JsonInclude.Include.ALWAYS)
-	@JsonProperty("id_empresa")
-	private EmpresaRequest empresa;
+	private Integer id;
 	
 	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("nome")
 	private String nome;
 	
 	@JsonInclude(JsonInclude.Include.ALWAYS)
-	@JsonProperty("is_master")
-	private Boolean isMaster;
+	@JsonProperty("documento")
+	private String documento;
 	
 	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("email")
 	private String email;
 	
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.ALWAYS)
 	@JsonProperty("senha")
 	private String senha;
 	
 	@JsonInclude(JsonInclude.Include.ALWAYS)
-	@JsonProperty("documento")
-	private String documento;
-
-	@JsonInclude(JsonInclude.Include.ALWAYS)
-	@JsonProperty("id_info_cadastro")
-	private InfoCadastroRequest infoCadastro;
+	@JsonProperty("is_master")
+	private Boolean isMaster;
 	
-	public Integer getIdUsuario() {
-		return idUsuario;
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("empresa")
+	private EmpresaRequest empresa;
+	
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	@JsonProperty("cadastro")
+	private InfoCadastroRequest cadastro;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -56,16 +55,22 @@ public class UsuarioRequest {
 		this.nome = nome;
 	}
 
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
-	@JsonProperty
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}
@@ -74,12 +79,12 @@ public class UsuarioRequest {
 		this.senha = senha;
 	}
 
-	public String getDocumento() {
-		return documento;
+	public Boolean getIsMaster() {
+		return isMaster;
 	}
 
-	public void setDocumento(String documento) {
-		this.documento = documento;
+	public void setIsMaster(Boolean isMaster) {
+		this.isMaster = isMaster;
 	}
 
 	public EmpresaRequest getEmpresa() {
@@ -90,21 +95,11 @@ public class UsuarioRequest {
 		this.empresa = empresa;
 	}
 
-	public InfoCadastroRequest getInfoCadastro() {
-		return infoCadastro;
+	public InfoCadastroRequest getCadastro() {
+		return cadastro;
 	}
 
-	public void setInfoCadastro(InfoCadastroRequest infoCadastro) {
-		this.infoCadastro = infoCadastro;
+	public void setCadastro(InfoCadastroRequest cadastro) {
+		this.cadastro = cadastro;
 	}
-
-	public Boolean getIsMaster() {
-		return isMaster;
-	}
-
-	public void setIsMaster(Boolean isMaster) {
-		this.isMaster = isMaster;
-	}	
-	
-	
 }
