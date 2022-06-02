@@ -3,6 +3,7 @@ package com.example.pdvsystem.businessLogic.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -135,5 +136,41 @@ public class VendaService {
 		}
 		
 		return list;
+	}
+
+	public boolean deleteVenda(Integer vendaId, Integer usuarioId) {
+		
+		Venda venda = new Venda();
+		Usuario usuario = new Usuario();
+		
+		try {
+			
+			venda = vendaRepository.getById(vendaId);
+			usuario = usuarioRepository.getById(usuarioId);
+			
+		} catch (Exception e) {
+			return false;
+		}
+		
+		if (!usuario.getIsMaster()) {
+			return false;
+		}
+		
+		Date today = new Date();
+		
+		long diffInMillies = Math.abs(today.getTime() - venda.getDataVenda().getTime());
+		int diff = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		
+		if (diff > 30) {
+			return false;
+		}
+		
+		try {
+			vendaRepository.delete(venda);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
 	}
 }

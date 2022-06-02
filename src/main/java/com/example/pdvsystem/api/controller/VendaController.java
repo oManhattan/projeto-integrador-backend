@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pdvsystem.api.dto.ProcessoVendaRequest;
 import com.example.pdvsystem.api.dto.VendaResponse;
-import com.example.pdvsystem.businessLogic.converter.VendaConverter;
 import com.example.pdvsystem.businessLogic.service.VendaService;
 
 @RestController
@@ -54,8 +55,6 @@ public class VendaController {
 		return new ResponseEntity<VendaResponse>(response, HttpStatus.FOUND);
 	}
 
-	
-	
 	@PostMapping(value = "post/venda")
 	public ResponseEntity<VendaResponse> criarVenda(@RequestBody ProcessoVendaRequest request) {
 
@@ -68,5 +67,15 @@ public class VendaController {
 		}
 
 		return new ResponseEntity<VendaResponse>(response, HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping(path = "delete/venda{vendaId}/usuario{usuarioId}")
+	public ResponseEntity<VendaResponse> deleteVenda(@PathVariable Integer vendaId, @PathVariable Integer usuarioId) {
+		
+		if (vendaService.deleteVenda(vendaId, usuarioId)) {
+			return new ResponseEntity<VendaResponse>(HttpStatus.ACCEPTED);
+		}
+		
+		return new ResponseEntity<VendaResponse>(HttpStatus.BAD_REQUEST);
 	}
 }
