@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ public class ProdutoController {
 	@Autowired
 	EmpresaService empresaService;
 	
+	@CrossOrigin
 	@GetMapping(value = "get/produto", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProdutoResponse> getProdutoById(@RequestParam(value = "id") Integer id) {
 		
@@ -43,6 +45,7 @@ public class ProdutoController {
 		return new ResponseEntity<ProdutoResponse>(response, HttpStatus.FOUND);
 	}
 	
+	@CrossOrigin
 	@GetMapping(value = "get/produto/all/empresa", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProdutoResponse>> getAllProdutoFromEmpresa(@RequestParam(value = "id") Integer id) {
 		
@@ -61,6 +64,7 @@ public class ProdutoController {
 		return new ResponseEntity<List<ProdutoResponse>>(response, HttpStatus.FOUND);
 	}
 	
+	@CrossOrigin
 	@PostMapping(value = "post/produto/empresa", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProdutoResponse> createProduto(@RequestParam(value = "id") Integer id, @RequestBody ProdutoRequest request) {
 		
@@ -85,6 +89,7 @@ public class ProdutoController {
 		return new ResponseEntity<ProdutoResponse>(response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin
 	@PutMapping(value = "put/produto", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProdutoResponse> updateProduto(@RequestParam(value = "id") Integer id, @RequestBody ProdutoRequest request) {
 		
@@ -106,6 +111,7 @@ public class ProdutoController {
 		return new ResponseEntity<ProdutoResponse>(response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin
 	@DeleteMapping(value = "delete/produto")
 	public ResponseEntity<ProdutoResponse> deleteProduto(@RequestParam(value = "id") Integer id) {
 		
