@@ -71,6 +71,4 @@ public class VendaController {
 
 		return new ResponseEntity<VendaResponse>(response, HttpStatus.CREATED);
 	}
-	
-	
 }
